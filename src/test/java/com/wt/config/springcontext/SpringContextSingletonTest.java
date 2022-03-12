@@ -1,5 +1,6 @@
 package com.wt.config.springcontext;
 
+import com.wt.config.flink.FlinkConfigValue;
 import com.wt.config.http.HttpConfigValue;
 import com.wt.config.thread.TaskConfigValue;
 import org.junit.Assert;
@@ -16,5 +17,9 @@ public class SpringContextSingletonTest {
         HttpConfigValue httpConfigValue = SpringContextSingleton.getBean(HttpConfigValue.class);
         Assert.assertNotNull(httpConfigValue);
         Assert.assertNotNull(httpConfigValue.getConnectTimeout());
+
+        FlinkConfigValue flinkConfigValue = SpringContextSingleton.getBean(FlinkConfigValue.class);
+        Assert.assertNotNull(flinkConfigValue);
+        Assert.assertNotNull(flinkConfigValue.getEnableCheckpoint());
     }
 }

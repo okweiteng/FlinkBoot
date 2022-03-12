@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.wt.flink;
+package com.wt.flink.transform;
 
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
