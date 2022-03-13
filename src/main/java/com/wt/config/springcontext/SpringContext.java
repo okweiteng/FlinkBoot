@@ -5,38 +5,38 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.Objects;
 
 public final class SpringContext implements AutoCloseable {
-    private volatile static ClassPathXmlApplicationContext CONTEXT;
+    private static volatile ClassPathXmlApplicationContext context;
 
     private SpringContext() {
     }
 
     public static void init() {
-        if (Objects.nonNull(CONTEXT)) {
+        if (Objects.nonNull(context)) {
             return;
         }
         synchronized (SpringContext.class) {
-            if (Objects.nonNull(CONTEXT)) {
+            if (Objects.nonNull(context)) {
                 return;
             }
-            CONTEXT = new ClassPathXmlApplicationContext("classpath:spring-context.xml");
+            context = new ClassPathXmlApplicationContext("classpath:spring-context.xml");
         }
     }
 
     public static synchronized <T> T getBean(Class<T> clazz) {
-        if (Objects.isNull(CONTEXT)) {
+        if (Objects.isNull(context)) {
             init();
         }
-        return CONTEXT.getBean(clazz);
+        return context.getBean(clazz);
 
     }
 
     @Override
     public void close() {
-        if (Objects.isNull(CONTEXT)) {
+        if (Objects.isNull(context)) {
             return;
         }
         try {
-            CONTEXT.close();
+            context.close();
         } catch (Exception ignore) {
         }
 

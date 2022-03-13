@@ -9,7 +9,7 @@ public final class SpringContextSingleton implements Closeable {
     private SpringContextSingleton() {
     }
 
-    public synchronized static <T> T getBean(Class<T> clazz) {
+    public static synchronized  <T> T getBean(Class<T> clazz) {
         return InnerApplicationContext.context.getBean(clazz);
     }
 
