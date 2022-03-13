@@ -18,11 +18,49 @@
 
 package com.wt.config.flink.application.service;
 
+import com.wt.config.flink.application.dto.FlinkConfigDto;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Collections;
+import java.util.List;
+
+@RunWith(SpringRunner.class)
+@ContextConfiguration("classpath:spring-context.xml")
+@Ignore
 public class FlinkConfigCacheServiceTest {
+
+    @Autowired
+    private FlinkConfigCacheService cacheService;
+
+    private FlinkConfigAppService mockAppService;
+
+    @Before
+    public void setUp() {
+        mockAppService = Mockito.mock(FlinkConfigAppService.class);
+        ReflectionTestUtils.setField(cacheService, "appService", mockAppService);
+        FlinkConfigDto f = new FlinkConfigDto(1, "", 1, 1);
+        Mockito.when(mockAppService.findAll()).thenReturn(Collections.singletonList(f));
+    }
 
     @Test
     public void findAll() {
+        List<FlinkConfigDto> actual = cacheService.findAll();
+        Assert.assertEquals(1, actual.size());
+        Assert.assertEquals(1, actual.get(0).getId().intValue());
+        Mockito.verify(mockAppService, Mockito.times(1)).findAll();
+
+        actual = cacheService.findAll();
+        Mockito.verify(mockAppService, Mockito.times(1)).findAll();
+        Assert.assertEquals(1, actual.size());
+        Assert.assertEquals(1, actual.get(0).getId().intValue());
     }
 }
