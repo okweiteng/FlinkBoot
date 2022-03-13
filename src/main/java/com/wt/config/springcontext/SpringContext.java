@@ -10,6 +10,9 @@ public final class SpringContext implements AutoCloseable {
     private SpringContext() {
     }
 
+    /**
+     * init spring context.
+     */
     public static void init() {
         if (Objects.nonNull(context)) {
             return;

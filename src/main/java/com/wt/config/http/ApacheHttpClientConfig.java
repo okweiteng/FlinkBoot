@@ -27,7 +27,9 @@ import java.util.concurrent.TimeUnit;
 public class ApacheHttpClientConfig {
     // https://springframework.guru/using-resttemplate-with-apaches-httpclient
     private static final int SCHEDULED_FIXED_DELAY_TIME = 20000;
+
     private static final int SEC_TO_MILLIS = 1000;
+
     private final HttpConfigValue config;
 
     @Bean

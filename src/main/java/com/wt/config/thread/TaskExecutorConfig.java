@@ -40,8 +40,9 @@ public class TaskExecutorConfig implements AsyncConfigurer {
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (exception, method, objects) ->
-                log.error("Exception occurs in async method: " + method.getName() +
-                        ", objects is: " + Arrays.deepToString(objects) +
-                        ", caused by: " + exception.getMessage(), exception);
+                log.error("Exception occurs in async method: "
+                        + method.getName()
+                        + ", objects is: " + Arrays.deepToString(objects)
+                        + ", caused by: " + exception.getMessage(), exception);
     }
 }
