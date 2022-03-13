@@ -18,13 +18,15 @@
 
 package com.wt.config.flink.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.data.repository.NoRepositoryBean;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
-@NoRepositoryBean
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "FLINK_BOOT_FLINK_CONFIG")
 public class FlinkConfig {
     @Id
