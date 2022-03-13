@@ -9,10 +9,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-context.xml")
-public class HttpConfigValueTest {
+public class HttpPropertiesTest {
 
     @Autowired
-    private HttpConfigValue configValue;
+    private HttpProperties configValue;
 
     @Test
     public void getConnectTimeout() {

@@ -18,8 +18,8 @@
 
 package com.wt.flink.transform;
 
-import com.wt.config.flink.FlinkConfigValue;
-import com.wt.config.springcontext.SpringContextSingleton;
+import com.wt.config.flink.FlinkProperties;
+import com.wt.config.spring.SpringContextSingleton;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
@@ -42,12 +42,12 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
     private static final long ONE_MINUTE = 60 * 1000;
 
-    private transient FlinkConfigValue flinkCfg;
+    private transient FlinkProperties flinkCfg;
 
     @Override
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
-        flinkCfg = SpringContextSingleton.getBean(FlinkConfigValue.class);
+        flinkCfg = SpringContextSingleton.getBean(FlinkProperties.class);
     }
 
     @Override

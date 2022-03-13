@@ -1,4 +1,4 @@
-package com.wt.config.springcontext;
+package com.wt.config.spring;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

@@ -1,4 +1,4 @@
-package com.wt.config.springcontext;
+package com.wt.config.spring;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -9,7 +9,7 @@ public final class SpringContextSingleton implements Closeable {
     private SpringContextSingleton() {
     }
 
-    public static synchronized  <T> T getBean(Class<T> clazz) {
+    public static synchronized <T> T getBean(Class<T> clazz) {
         return InnerApplicationContext.context.getBean(clazz);
     }
 

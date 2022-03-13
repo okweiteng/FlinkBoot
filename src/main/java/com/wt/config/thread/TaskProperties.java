@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Configuration
-public class TaskConfigValue {
+public class TaskProperties {
     @Value("${app.async.threadPool.coreSize}")
     private Integer coreSize;
 
