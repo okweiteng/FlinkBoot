@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Configuration
-public class FlinkConfigValue {
+public class FlinkProperties {
     @Value("${flink.job.name.prefix}")
     private String namePrefix;
 

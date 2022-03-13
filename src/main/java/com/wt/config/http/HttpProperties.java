@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Configuration
-public class HttpConfigValue {
+public class HttpProperties {
     @Value("${app.http.connectTimeout}")
     private Integer connectTimeout;
 

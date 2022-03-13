@@ -14,7 +14,6 @@ import org.apache.http.message.BasicHeaderElementIterator;
 import org.apache.http.protocol.HTTP;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Objects;
@@ -23,14 +22,13 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-@EnableScheduling
 public class ApacheHttpClientConfig {
     // https://springframework.guru/using-resttemplate-with-apaches-httpclient
     private static final int SCHEDULED_FIXED_DELAY_TIME = 20000;
 
     private static final int SEC_TO_MILLIS = 1000;
 
-    private final HttpConfigValue config;
+    private final HttpProperties config;
 
     @Bean
     public PoolingHttpClientConnectionManager poolingConnectionManager() {

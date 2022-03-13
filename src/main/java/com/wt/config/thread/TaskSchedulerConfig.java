@@ -12,7 +12,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @RequiredArgsConstructor
 public class TaskSchedulerConfig {
 
-    private final TaskConfigValue config;
+    private final TaskProperties config;
 
     @Bean
     public TaskScheduler taskScheduler() {

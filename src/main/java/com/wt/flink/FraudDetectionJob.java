@@ -18,8 +18,8 @@
 
 package com.wt.flink;
 
-import com.wt.config.flink.FlinkConfigValue;
-import com.wt.config.springcontext.SpringContextSingleton;
+import com.wt.config.flink.FlinkProperties;
+import com.wt.config.spring.SpringContextSingleton;
 import com.wt.flink.transform.FraudDetector;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.runtime.state.hashmap.HashMapStateBackend;
@@ -43,7 +43,7 @@ public class FraudDetectionJob {
     public static void main(String[] args) {
         try {
             StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-            FlinkConfigValue flinkCfg = SpringContextSingleton.getBean(FlinkConfigValue.class);
+            FlinkProperties flinkCfg = SpringContextSingleton.getBean(FlinkProperties.class);
             configParallelism(env, flinkCfg);
             configStateBackend(env, flinkCfg);
             configCheckpoint(env, flinkCfg);
@@ -77,21 +77,21 @@ public class FraudDetectionJob {
 
     }
 
-    private static void configParallelism(StreamExecutionEnvironment env, FlinkConfigValue flinkCfg) {
+    private static void configParallelism(StreamExecutionEnvironment env, FlinkProperties flinkCfg) {
         env.setParallelism(flinkCfg.getParallelism());
         env.setMaxParallelism(flinkCfg.getParallelism());
     }
 
-    private static void configStateBackend(StreamExecutionEnvironment env, FlinkConfigValue flinkCfg) {
+    private static void configStateBackend(StreamExecutionEnvironment env, FlinkProperties flinkCfg) {
         env.setStateBackend(new HashMapStateBackend());
     }
 
-    private static void configRestartStrategy(StreamExecutionEnvironment env, FlinkConfigValue flinkCfg) {
+    private static void configRestartStrategy(StreamExecutionEnvironment env, FlinkProperties flinkCfg) {
         env.setRestartStrategy(RestartStrategies.fixedDelayRestart(
                 flinkCfg.getFixedDelayRestartAttempts(), flinkCfg.getFixedDelayBetweenAttempts()));
     }
 
-    private static void configCheckpoint(StreamExecutionEnvironment env, FlinkConfigValue flinkCfg) {
+    private static void configCheckpoint(StreamExecutionEnvironment env, FlinkProperties flinkCfg) {
         if (!Objects.equals(flinkCfg.getEnableCheckpoint(), Boolean.TRUE)) {
             return;
         }
