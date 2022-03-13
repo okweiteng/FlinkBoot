@@ -169,7 +169,7 @@ under the License.
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
-            <version>3.0.5</version>
+            <version>2.9.3</version>
         </dependency>
 
         <!--using jedis to connect redis deployed in aliyun has some problem-->
