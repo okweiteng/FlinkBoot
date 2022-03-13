@@ -16,22 +16,9 @@
  * limitations under the License.
  */
 
-package com.wt.config.spring;
+package com.wt.config.flink.infrastructure.repo;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.wt.config.flink.domain.service.FlinkConfigRepository;
 
-@EnableAsync
-@EnableRetry
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
-@EnableScheduling
-@EnableJpaRepositories(basePackages = "com.wt")
-@Configuration
-public class SpringConfig {
+public interface JpaFlinkConfigRepository extends FlinkConfigRepository {
 }

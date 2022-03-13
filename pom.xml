@@ -224,15 +224,6 @@ under the License.
 
     <profiles>
         <profile>
-            <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <deploy.env>local</deploy.env>
-            </properties>
-        </profile>
-        <profile>
             <id>junit</id>
             <properties>
                 <deploy.env>junit</deploy.env>

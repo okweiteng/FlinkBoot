@@ -16,22 +16,26 @@
  * limitations under the License.
  */
 
-package com.wt.config.spring;
+package com.wt.config.flink.application.service;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.wt.config.flink.application.dto.FlinkConfigDto;
+import com.wt.config.flink.domain.service.FlinkConfigRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@EnableAsync
-@EnableRetry
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
-@EnableScheduling
-@EnableJpaRepositories(basePackages = "com.wt")
-@Configuration
-public class SpringConfig {
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class FlinkConfigAppService {
+    private final FlinkConfigRepository repository;
+
+    @Transactional(readOnly = true)
+    public List<FlinkConfigDto> findAll() {
+        return repository.findAll().stream()
+                .map(FlinkConfigDto::new)
+                .collect(Collectors.toList());
+    }
 }

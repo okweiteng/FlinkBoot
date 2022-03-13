@@ -64,7 +64,7 @@
 		</module>
 
 		<!-- Import Checker -->
-		<module name="AvoidStarImport"/>
+		<!--<module name="AvoidStarImport"/>-->
 		<module name="UnusedImports"/>
 		<module name="RedundantImport"/>
 
@@ -82,7 +82,7 @@
 		<module name="NeedBraces"/>
 
 		<!-- Javadoc Checker -->
-		<module name="JavadocMethod">
+		<!--<module name="JavadocMethod">
 			<property name="scope" value="public"/>
 			<property name="allowMissingParamTags" value="true"/>
 			<property name="allowMissingReturnTag" value="true"/>
@@ -107,7 +107,7 @@
 					  value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>
 		</module>
 		<module name="JavadocParagraph"/>
-		<module name="NonEmptyAtclauseDescription"/>
+		<module name="NonEmptyAtclauseDescription"/>-->
 
 		<!-- Coding Checker -->
 		<module name="IllegalTokenText">

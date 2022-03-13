@@ -16,22 +16,28 @@
  * limitations under the License.
  */
 
-package com.wt.config.spring;
+package com.wt.config.flink.domain.model;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import lombok.Getter;
+import org.springframework.data.repository.NoRepositoryBean;
 
-@EnableAsync
-@EnableRetry
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
-@EnableScheduling
-@EnableJpaRepositories(basePackages = "com.wt")
-@Configuration
-public class SpringConfig {
+import javax.persistence.*;
+
+@Getter
+@NoRepositoryBean
+@Entity(name = "FLINK_BOOT_FLINK_CONFIG")
+public class FlinkConfig {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Integer id;
+
+    @Column(name = "JOB_NAME_PREFIX")
+    private String namePrefix;
+
+    @Column(name = "JOB_PARALLELISM")
+    private Integer parallelism;
+
+    @Column(name = "JOB_MAX_PARALLELISM")
+    private Integer maxParallelism;
 }
