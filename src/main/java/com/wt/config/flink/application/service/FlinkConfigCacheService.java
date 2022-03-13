@@ -31,7 +31,7 @@ public class FlinkConfigCacheService {
 
     private final FlinkConfigAppService appService;
 
-    @Cacheable(cacheNames = "configs", key = "'flinkCfgs'", unless = "#result == null && #result.isEmpty()")
+    @Cacheable(cacheNames = "configs", key = "'flinkCfgs'", unless = "#result == null || #result.isEmpty()")
     public List<FlinkConfigDto> findAll() {
         return appService.findAll();
     }
