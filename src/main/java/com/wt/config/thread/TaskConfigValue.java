@@ -9,10 +9,13 @@ import org.springframework.context.annotation.Configuration;
 public class TaskConfigValue {
     @Value("${app.async.threadPool.coreSize}")
     private Integer coreSize;
+
     @Value("${app.async.threadPool.maxSize}")
     private Integer maxSize;
+
     @Value("${app.async.threadPool.queueCapacity}")
     private Integer queueCapacity;
+
     @Value("${app.async.threadPool.awaitTerminationSeconds}")
     private Integer awaitTerminationSeconds;
 }

@@ -33,10 +33,15 @@ import org.slf4j.LoggerFactory;
  */
 public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert> {
     private static final long serialVersionUID = 1L;
+
     private static final Logger LOG = LoggerFactory.getLogger(FraudDetector.class);
+
     private static final double SMALL_AMOUNT = 1.00;
+
     private static final double LARGE_AMOUNT = 500.00;
+
     private static final long ONE_MINUTE = 60 * 1000;
+
     private transient FlinkConfigValue flinkCfg;
 
     @Override
