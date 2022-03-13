@@ -16,24 +16,22 @@
  * limitations under the License.
  */
 
-package com.wt.config.spring;
+package com.wt.config.cache;
 
-import org.springframework.cache.annotation.EnableCaching;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableAsync
-@EnableRetry
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
-@EnableScheduling
-@EnableCaching
-@EnableJpaRepositories(basePackages = "com.wt")
+@Getter
 @Configuration
-public class SpringConfig {
+public class CacheProperties {
+    @Value("${spring.cache.cacheNames}")
+    private String cacheNames;
+
+    @Value("${spring.cache.allowNullValues}")
+    private Boolean allowNullValues;
+
+    @Value("${spring.cache.caffeine.spec}")
+    private String caffeineSpec;
+
 }

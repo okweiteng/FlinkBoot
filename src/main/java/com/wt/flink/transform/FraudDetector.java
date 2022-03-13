@@ -18,9 +18,8 @@
 
 package com.wt.flink.transform;
 
-import com.wt.config.flink.application.dto.FlinkConfigDto;
-import com.wt.config.flink.application.service.FlinkConfigAppService;
 import com.wt.config.spring.SpringContextSingleton;
+import com.wt.flink.transform.service.FraudDetectorService;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
@@ -29,8 +28,7 @@ import org.apache.flink.walkthrough.common.entity.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 /**
  * Skeleton code for implementing a fraud detector.
@@ -46,33 +44,24 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
     private static final long ONE_MINUTE = 60 * 1000;
 
-    private transient FlinkConfigAppService flinkCfg;
+    private transient FraudDetectorService service;
 
     @Override
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
-        flinkCfg = SpringContextSingleton.getBean(FlinkConfigAppService.class);
+        service = SpringContextSingleton.getBean(FraudDetectorService.class);
     }
 
     @Override
     public void processElement(Transaction transaction, Context context, Collector<Alert> collector) {
+        if (Objects.isNull(transaction)) {
+            return;
+        }
         try {
-            printSpringFunction();
-            Alert alert = new Alert();
-            alert.setId(transaction.getAccountId());
+            Alert alert = service.processElement(transaction);
             collector.collect(alert);
         } catch (Exception e) {
-            LOG.error("processElement failed", e);
+            LOG.error("processElement failed, transaction is: {}", transaction, e);
         }
-    }
-
-    private void printSpringFunction() {
-        // bad case, just show that it works reading db data in flink operator
-        List<FlinkConfigDto> all = flinkCfg.findAll();
-        String info = "processElement, test spring context: " + all.stream()
-                .map(FlinkConfigDto::toString)
-                .collect(Collectors.joining("; "));
-        System.out.println(info);
-        LOG.info(info);
     }
 }

@@ -16,24 +16,13 @@
  * limitations under the License.
  */
 
-package com.wt.config.spring;
+package com.wt.config.flink.application.service;
 
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.junit.Test;
 
-@EnableAsync
-@EnableRetry
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
-@EnableScheduling
-@EnableCaching
-@EnableJpaRepositories(basePackages = "com.wt")
-@Configuration
-public class SpringConfig {
+public class FlinkConfigCacheServiceTest {
+
+    @Test
+    public void findAll() {
+    }
 }

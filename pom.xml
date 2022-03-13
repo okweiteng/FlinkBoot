@@ -166,6 +166,12 @@ under the License.
             <version>2.11.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
         <!--using jedis to connect redis deployed in aliyun has some problem-->
         <!--<dependency>
             <groupId>redis.clients</groupId>
