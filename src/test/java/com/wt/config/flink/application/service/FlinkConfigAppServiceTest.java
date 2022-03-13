@@ -16,22 +16,30 @@
  * limitations under the License.
  */
 
-package com.wt.config.spring;
+package com.wt.config.flink.application.service;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.wt.config.flink.application.dto.FlinkConfigDto;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@EnableAsync
-@EnableRetry
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
-@EnableScheduling
-@EnableJpaRepositories(basePackages = "com.wt")
-@Configuration
-public class SpringConfig {
+import java.util.List;
+
+@RunWith(SpringRunner.class)
+@ContextConfiguration("classpath:spring-context.xml")
+@Ignore
+public class FlinkConfigAppServiceTest {
+
+    @Autowired
+    private FlinkConfigAppService appService;
+
+    @Test
+    public void findAll() {
+        List<FlinkConfigDto> actual = appService.findAll();
+        Assert.assertNotNull(actual);
+    }
 }

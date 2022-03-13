@@ -5,8 +5,10 @@ import com.wt.config.flink.FlinkProperties;
 import com.wt.config.http.HttpProperties;
 import com.wt.config.thread.TaskProperties;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class SpringContextSingletonTest {
 
     @Test

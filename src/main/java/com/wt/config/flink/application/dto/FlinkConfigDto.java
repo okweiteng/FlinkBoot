@@ -16,22 +16,31 @@
  * limitations under the License.
  */
 
-package com.wt.config.spring;
+package com.wt.config.flink.application.dto;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.wt.config.flink.domain.model.FlinkConfig;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@EnableAsync
-@EnableRetry
-@EnableAspectJAutoProxy
-@EnableTransactionManagement
-@EnableScheduling
-@EnableJpaRepositories(basePackages = "com.wt")
-@Configuration
-public class SpringConfig {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class FlinkConfigDto {
+    private Integer id;
+
+    private String namePrefix;
+
+    private Integer parallelism;
+
+    private Integer maxParallelism;
+
+    public FlinkConfigDto(FlinkConfig f) {
+        this.id = f.getId();
+        this.namePrefix = f.getNamePrefix();
+        this.parallelism = f.getParallelism();
+        this.maxParallelism = f.getMaxParallelism();
+    }
 }
