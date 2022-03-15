@@ -26,42 +26,24 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Configuration
 public class CacheManagerConfig {
-    private static final String COMMA = ",";
-
     private final CacheProperties properties;
 
     @Bean
     public CacheManager cacheManager() {
-        List<String> cacheNames = parseCacheNames(properties.getCacheNames());
+        List<String> cacheNames = properties.cacheNames();
         CaffeineCacheManager manager = new CaffeineCacheManager();
         manager.setCacheNames(cacheNames);
         manager.setAllowNullValues(Objects.equals(properties.getAllowNullValues(), Boolean.TRUE));
         Caffeine<Object, Object> caffeine = Caffeine.from(properties.getCaffeineSpec());
         manager.setCaffeine(caffeine);
         return manager;
-    }
-
-    private List<String> parseCacheNames(String cacheNames) {
-        if (!StringUtils.hasLength(cacheNames)) {
-            return Collections.emptyList();
-        }
-        return Arrays.stream(cacheNames.split(COMMA))
-                .filter(StringUtils::hasLength)
-                .map(String::trim)
-                .filter(StringUtils::hasLength)
-                .collect(Collectors.toList());
-
     }
 
     /**

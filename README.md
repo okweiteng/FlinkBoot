@@ -7,3 +7,4 @@
 * Spring data jpa + Hibernate + hikari
 * Spring cache + caffeine
 * Spring Retry
+* Spring Data Redis + Lettuce + Redisson
