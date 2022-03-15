@@ -16,28 +16,29 @@
  * limitations under the License.
  */
 
-package com.wt.config.cache;
+package com.wt.config.util;
 
-import com.wt.config.util.ConfigParser;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter
-@Configuration
-public class CacheProperties {
-    @Value("${spring.cache.cacheNames}")
-    private String cacheNames;
+public class ConfigParser {
+    private static final String COMMA = ",";
 
-    @Value("${spring.cache.allowNullValues}")
-    private Boolean allowNullValues;
+    private ConfigParser() {
+    }
 
-    @Value("${spring.cache.caffeine.spec}")
-    private String caffeineSpec;
-
-    public List<String> cacheNames() {
-        return ConfigParser.spit(cacheNames);
+    public static List<String> spit(String config) {
+        if (StringUtils.isBlank(config)) {
+            return Collections.emptyList();
+        }
+        return Arrays.stream(config.split(COMMA))
+                .filter(StringUtils::isNotBlank)
+                .map(String::trim)
+                .filter(StringUtils::isNotBlank)
+                .collect(Collectors.toList());
     }
 }
