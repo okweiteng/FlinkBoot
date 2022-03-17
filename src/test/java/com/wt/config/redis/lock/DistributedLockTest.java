@@ -18,11 +18,27 @@
 
 package com.wt.config.redis.lock;
 
-import java.util.concurrent.locks.Lock;
-import java.util.function.Consumer;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
-public interface DistributedLock {
-    void tryLockNoWait(String lockName, Consumer<Lock> lockConsumer);
+@RunWith(SpringRunner.class)
+@ContextConfiguration("classpath:spring-context.xml")
+// @Ignore
+public class DistributedLockTest {
 
-    void tryLockWithWait(String lockName, Consumer<Lock> lockConsumer);
+    @Autowired
+    private DistributedLock lock;
+
+    @Test
+    public void tryLockNoWait() {
+        lock.tryLockNoWait("test", t -> actualMethod());
+    }
+
+    private void actualMethod() {
+        System.out.println("test method");
+    }
+
 }
