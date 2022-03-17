@@ -32,7 +32,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### pom ###
+dependency-reduced-pom.xml
+
+### local configs ###
 src/main/resources/application.properties
 src/main/resources/log4j2.properties
-dependency-reduced-pom.xml
 configs/local/
