@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Configuration
 public class LockProperties {
-    @Value("${app.lock.waitTimeInSec")
+    @Value("${app.lock.waitTimeInSec}")
     private Integer waitTimeInSec;
 
     @Value("${app.lock.leaseTimeInSec}")
