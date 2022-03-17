@@ -38,6 +38,8 @@ public class RedissonDistributedLock implements DistributedLock {
 
     private final RedissonClient redissonClient;
 
+    private final LockProperties properties;
+
     @Override
     public void tryLockNoWait(String lockName, Consumer<Lock> lockConsumer) {
         RLock lock = null;
@@ -62,7 +64,7 @@ public class RedissonDistributedLock implements DistributedLock {
         RLock lock = null;
         try {
             lock = redissonClient.getLock(REDISSON_LOCK_PREFIX + lockName);
-            boolean success = lock.tryLock(1000, 10000, TimeUnit.SECONDS);
+            boolean success = lock.tryLock(properties.getWaitTimeInSec(), properties.getLeaseTimeInSec(), TimeUnit.SECONDS);
             if (!success) {
                 return;
             }

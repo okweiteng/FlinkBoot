@@ -18,28 +18,16 @@
 
 package com.wt.config.redis.lock;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
-@RunWith(SpringRunner.class)
-@ContextConfiguration("classpath:spring-context.xml")
-@Ignore
-public class DistributedLockTest {
+@Getter
+@Configuration
+public class LockProperties {
+    @Value("${app.lock.waitTimeInSec")
+    private Integer waitTimeInSec;
 
-    @Autowired
-    private DistributedLock lock;
-
-    @Test
-    public void tryLockNoWait() {
-        lock.tryLockNoWait("test", t -> actualMethod());
-    }
-
-    private void actualMethod() {
-        System.out.println("test method");
-    }
-
+    @Value("${app.lock.leaseTimeInSec}")
+    private Integer leaseTimeInSec;
 }
