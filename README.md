@@ -7,4 +7,7 @@
 * Spring data jpa + Hibernate + hikari
 * Spring cache + caffeine
 * Spring Retry
-* Spring Data Redis + Lettuce + Redisson
+* Spring Data Redis + Lettuce + Redisson + DistributedLock
+
+### package
+* mvn clean package -Pjunit -Dmaven.test.skip=true
