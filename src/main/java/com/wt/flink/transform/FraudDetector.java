@@ -20,6 +20,10 @@ package com.wt.flink.transform;
 
 import com.wt.config.spring.SpringContextSingleton;
 import com.wt.flink.transform.service.FraudDetectorService;
+import org.apache.flink.api.common.state.ReducingState;
+import org.apache.flink.api.common.state.ReducingStateDescriptor;
+import org.apache.flink.api.common.state.StateTtlConfig;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
@@ -46,10 +50,32 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
     private transient FraudDetectorService service;
 
+    private transient ReducingState<Alert> maxAlertState;
+
     @Override
+
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
+        maxAlertState = getMaxAlertState();
         service = SpringContextSingleton.getBean(FraudDetectorService.class);
+    }
+
+    private ReducingState<Alert> getMaxAlertState() {
+        StateTtlConfig ttl = StateTtlConfig
+                .newBuilder(Time.seconds(1440))
+                // TTL 的更新策略（默认是 OnCreateAndWrite）：仅在创建和写入时更新
+                .setUpdateType(StateTtlConfig.UpdateType.OnCreateAndWrite)
+                .setStateVisibility(StateTtlConfig.StateVisibility.NeverReturnExpired)
+                // 启用全量快照时进行清理的策略，这可以减少整个快照的大小。当前实现中不会清理本地的状态，但从上次快照恢复时，不会恢复那些已经删除的过期数据。
+                // 这种策略在 RocksDBStateBackend 的增量 checkpoint 模式下无效。
+                .cleanupFullSnapshot()
+                .build();
+        ReducingStateDescriptor<Alert> descriptor = new ReducingStateDescriptor<>(
+                "max-alert",
+                new MaxFunction(),
+                Alert.class);
+        descriptor.enableTimeToLive(ttl);
+        return getRuntimeContext().getReducingState(descriptor);
     }
 
     @Override
@@ -59,7 +85,8 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
         }
         try {
             Alert alert = service.processElement(transaction);
-            collector.collect(alert);
+            maxAlertState.add(alert);
+            collector.collect(maxAlertState.get());
         } catch (Exception e) {
             LOG.error("processElement failed, transaction is: {}", transaction, e);
         }
